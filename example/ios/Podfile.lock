@@ -1,0 +1,29 @@
+PODS:
+  - Flutter (1.0.0)
+  - Heap (7.5.1)
+  - heap_analytics (0.0.1):
+    - Flutter
+    - Heap (~> 7.0)
+
+DEPENDENCIES:
+  - Flutter (from `Flutter`)
+  - heap_analytics (from `.symlinks/plugins/heap_analytics/ios`)
+
+SPEC REPOS:
+  trunk:
+    - Heap
+
+EXTERNAL SOURCES:
+  Flutter:
+    :path: Flutter
+  heap_analytics:
+    :path: ".symlinks/plugins/heap_analytics/ios"
+
+SPEC CHECKSUMS:
+  Flutter: 434fef37c0980e73bb6479ef766c45957d4b510c
+  Heap: bc1e3fd70f05375d41629d3634692ef088851449
+  heap_analytics: 2948dd91a2eb134705e329a6199185fe38f1a60e
+
+PODFILE CHECKSUM: 7368163408c647b7eb699d0d788ba6718e18fb8d
+
+COCOAPODS: 1.10.1

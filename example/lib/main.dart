@@ -19,7 +19,8 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    initPlatformState();
+    HeapAnalytics.init(appId: '1262340541');
+    //initPlatformState();
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.

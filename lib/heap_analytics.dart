@@ -15,13 +15,22 @@ class HeapAnalytics {
         .invokeMethod('initHeap', <String, dynamic>{'appId': appId});
   }
 
-  static Future<bool> track(
+  static Future track(
       {required String event, Map<String, dynamic>? properties}) async {
     return await _channel.invokeMethod('track',
         <String, dynamic>{'event': event, 'properties': properties ?? {}});
   }
 
-  // static Future<bool> identify(String id) async {
-  //   return await
-  // }
+  static Future identify(String id) async {
+    return await _channel.invokeMethod('identify', <String, dynamic>{'id': id});
+  }
+
+  static Future addUserProperties(
+      {required Map<String, dynamic> properties}) async {
+    return await _channel.invokeMethod('addUserProperties', <String, dynamic>{'properties': properties});
+  }
+
+  static Future resetIdentity() async {
+    return await _channel.invokeMethod('resetIdentity');
+  }
 }

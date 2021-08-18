@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'dart:async';
 
@@ -19,8 +20,12 @@ class _MyAppState extends State<MyApp> {
   @override
   void initState() {
     super.initState();
-    HeapAnalytics.init(appId: '1262340541');
+    doHeapThings();
     //initPlatformState();
+  }
+
+  doHeapThings() async {
+    await HeapAnalytics.init(appId: '1262340541');
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.
@@ -49,13 +54,52 @@ class _MyAppState extends State<MyApp> {
   Widget build(BuildContext context) {
     return MaterialApp(
       home: Scaffold(
-        appBar: AppBar(
-          title: const Text('Plugin example app'),
-        ),
-        body: Center(
-          child: Text('Running on: $_platformVersion\n'),
-        ),
-      ),
+          appBar: AppBar(
+            title: const Text('Plugin example app'),
+          ),
+          body: SizedBox.expand(
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.center,
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                CupertinoButton(
+                    child: Text('Track event'),
+                    onPressed: () {
+                      HeapAnalytics.track(event: 'test');
+                    }),
+                CupertinoButton(
+                    child: Text('Track event w/ properties'),
+                    onPressed: () {
+                      HeapAnalytics.track(
+                          event: 'test_properties',
+                          properties: {
+                            'one': 'two',
+                            'three': 4,
+                            'four': '123'
+                          });
+                    }),
+                CupertinoButton(
+                    child: Text('Identify'),
+                    onPressed: () {
+                      HeapAnalytics.identify('mehdi');
+                    }),
+                CupertinoButton(
+                    child: Text('Set User Properties'),
+                    onPressed: () {
+                      HeapAnalytics.addUserProperties(properties: {
+                        'username': 'mehdi',
+                        'email': 'elmehdikamar@gmail.com',
+                        'first_name': 'Mehdi'
+                      });
+                    }),
+                CupertinoButton(
+                    child: Text('Reset identity'),
+                    onPressed: () {
+                      HeapAnalytics.resetIdentity();
+                    })
+              ],
+            ),
+          )),
     );
   }
 }

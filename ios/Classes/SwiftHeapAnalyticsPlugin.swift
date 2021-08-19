@@ -46,7 +46,7 @@ public class SwiftHeapAnalyticsPlugin: NSObject, FlutterPlugin {
             Heap.track(eventName, withProperties: properties as? [AnyHashable : Any])
         } else {
             result(FlutterError.init(code: "BAD_ARGS",
-                                     message: "No event name provided",
+                                     message: "e",
                                      details: nil))
         }
     }

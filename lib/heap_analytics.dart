@@ -17,8 +17,10 @@ class HeapAnalytics {
 
   static Future track(
       {required String event, Map<String, dynamic>? properties}) async {
-    return await _channel.invokeMethod('track',
-        <String, dynamic>{'event': event, 'properties': properties ?? {}});
+    var _properties = properties ?? {};
+    _properties.updateAll((key, value) => value.toString());
+    return await _channel.invokeMethod(
+        'track', <String, dynamic>{'event': event, 'properties': _properties});
   }
 
   static Future identify(String id) async {
@@ -27,7 +29,10 @@ class HeapAnalytics {
 
   static Future addUserProperties(
       {required Map<String, dynamic> properties}) async {
-    return await _channel.invokeMethod('addUserProperties', <String, dynamic>{'properties': properties});
+    var _properties = properties;
+    _properties.updateAll((key, value) => value.toString());
+    return await _channel.invokeMethod(
+        'addUserProperties', <String, dynamic>{'properties': _properties});
   }
 
   static Future resetIdentity() async {

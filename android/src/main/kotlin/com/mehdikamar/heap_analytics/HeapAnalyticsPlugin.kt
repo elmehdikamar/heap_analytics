@@ -31,7 +31,7 @@ class HeapAnalyticsPlugin : FlutterPlugin, MethodCallHandler {
             "track" -> track(call.argument("event"), call.argument("properties"), result)
             "identify" -> identify(call.argument("id"), result)
             "addUserProperties" -> addUserProperties(call.argument("properties"), result)
-            "resetIdentity" -> resetIdentity()
+            "resetIdentity" -> resetIdentity(result)
             else -> result.notImplemented()
         }
     }
@@ -39,12 +39,14 @@ class HeapAnalyticsPlugin : FlutterPlugin, MethodCallHandler {
     private fun initHeap(appId: String?, result: Result) {
         if (appId != null) {
             Heap.init(context, appId)
+            result.success(null)
         } else result.error("BAD_ARGS", "No appId provided", null)
     }
 
     private fun track(eventName: String?, properties: HashMap<String, String>?, result: Result) {
         if (eventName != null && properties != null) {
             Heap.track(eventName, properties)
+            result.success(null)
         } else result.error("BAD_ARGS", "No event name provided", null)
 
     }
@@ -52,17 +54,20 @@ class HeapAnalyticsPlugin : FlutterPlugin, MethodCallHandler {
     private fun identify(id: String?, result: Result) {
         if (id != null) {
             Heap.identify(id)
+            result.success(null)
         } else result.error("BAD_ARGS", "No identity provided", null)
     }
 
     private fun addUserProperties(properties: HashMap<String, String>?, result: Result) {
         if (properties != null) {
             Heap.addUserProperties(properties)
+            result.success(null)
         } else result.error("BAD_ARGS", "No properties provided", null)
     }
 
-    private fun resetIdentity() {
+    private fun resetIdentity(result: Result) {
         Heap.resetIdentity()
+        result.success(null)
     }
 
     override fun onDetachedFromEngine(@NonNull binding: FlutterPlugin.FlutterPluginBinding) {

@@ -19,7 +19,7 @@ public class SwiftHeapAnalyticsPlugin: NSObject, FlutterPlugin {
         case "addUserProperties":
             addUserProperties(arguments: call.arguments as! NSDictionary, result: result)
         case "resetIdentity":
-            resetIdentity()
+            resetIdentity(result: result)
         default:
             result(FlutterMethodNotImplemented)
         }
@@ -32,6 +32,7 @@ public class SwiftHeapAnalyticsPlugin: NSObject, FlutterPlugin {
             options.disableTouchAutocapture = true
             options.disableTextCapture = true
             Heap.initialize(appId, with: options)
+            result(nil)
         } else {
             result(FlutterError.init(code: "BAD_ARGS",
                                      message: "No appId provided",
@@ -44,6 +45,7 @@ public class SwiftHeapAnalyticsPlugin: NSObject, FlutterPlugin {
             let eventName = arguments["event"] as! String
             let properties = arguments["properties"] as! NSDictionary
             Heap.track(eventName, withProperties: properties as? [AnyHashable : Any])
+            result(nil)
         } else {
             result(FlutterError.init(code: "BAD_ARGS",
                                      message: "e",
@@ -55,6 +57,7 @@ public class SwiftHeapAnalyticsPlugin: NSObject, FlutterPlugin {
         if(arguments["id"] != nil) {
             let id = arguments["id"] as! String
             Heap.identify(id)
+            result(nil)
         }
         else {
             result(FlutterError.init(code: "BAD_ARGS",
@@ -67,6 +70,7 @@ public class SwiftHeapAnalyticsPlugin: NSObject, FlutterPlugin {
         if(arguments["properties"] != nil) {
             let properties = arguments["properties"] as! NSDictionary
             Heap.addUserProperties(properties as! [AnyHashable : Any])
+            result(nil)
         }
         else {
             result(FlutterError.init(code: "BAD_ARGS",
@@ -75,8 +79,9 @@ public class SwiftHeapAnalyticsPlugin: NSObject, FlutterPlugin {
         }
     }
     
-    public func resetIdentity() {
+    public func resetIdentity(result: @escaping FlutterResult) {
         Heap.resetIdentity()
+        result(nil)
     }
     
 }

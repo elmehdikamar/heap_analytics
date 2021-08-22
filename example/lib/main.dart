@@ -25,7 +25,7 @@ class _MyAppState extends State<MyApp> {
   }
 
   doHeapThings() async {
-    await HeapAnalytics.init(appId: '1262340541');
+    await HeapAnalytics.init(appId: 'YOUR_APP_ID');
   }
 
   // Platform messages are asynchronous, so we initialize in an async method.

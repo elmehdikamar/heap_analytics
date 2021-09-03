@@ -16,8 +16,11 @@ class HeapAnalytics {
   }
 
   static Future track(
-      {required String event, Map<String, dynamic>? properties}) async {
+      {required String event,
+      Map<String, dynamic>? properties,
+      bool keepNull = false}) async {
     var _properties = properties ?? {};
+    if (!keepNull) _properties.removeWhere((key, value) => value == null);
     _properties.updateAll((key, value) => value.toString());
     return await _channel.invokeMethod(
         'track', <String, dynamic>{'event': event, 'properties': _properties});
@@ -28,8 +31,9 @@ class HeapAnalytics {
   }
 
   static Future addUserProperties(
-      {required Map<String, dynamic> properties}) async {
+      {required Map<String, dynamic> properties, bool keepNull = false}) async {
     var _properties = properties;
+    if (!keepNull) _properties.removeWhere((key, value) => value == null);
     _properties.updateAll((key, value) => value.toString());
     return await _channel.invokeMethod(
         'addUserProperties', <String, dynamic>{'properties': _properties});
